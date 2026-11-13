@@ -1,6 +1,9 @@
+import logging
 from app.db import get_db_connection
 from app.repositorios.ventas.detalle_servicio_repository import DetalleServicioRepository
 from app.repositorios.inventario.servicio_repository import ServicioRepository
+
+logger = logging.getLogger(__name__)
 
 
 class DetalleServicioService:
@@ -57,7 +60,7 @@ class DetalleServicioService:
             if not conexion_externa:
                 conn.rollback()
 
-            print(f"LOG ERROR (DetalleServicioService): {str(e)}")
+            logger.error("Error al registrar detalle de servicio: %s", e)
 
             return {
                 "success": False,
@@ -88,7 +91,7 @@ class DetalleServicioService:
             }
 
         except Exception as e:
-            print(f"LOG ERROR (DetalleServicioService): {str(e)}")
+            logger.error("Error al obtener detalles de servicio de venta %s: %s", id_venta, e)
 
             return {
                 "success": False,

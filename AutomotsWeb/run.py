@@ -1,7 +1,9 @@
+import os
 from app import create_app
 
 app = create_app()
 
 if __name__ == '__main__':
-    # Habilitamos el modo debug para facilitar el desarrollo
-    app.run(debug=True, port=5000)
+    debug_mode = os.environ.get('FLASK_DEBUG', 'False').lower() in ('true', '1', 't')
+    port = int(os.environ.get('PORT', 5000))
+    app.run(debug=debug_mode, port=port)

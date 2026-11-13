@@ -61,8 +61,6 @@ class TestCrearVehiculoError(unittest.TestCase):
         }
 
         resultado = self.servicio.guardar_vehiculo(datos)
-        
-        print(f"Resultado obtenido: success={resultado['success']}, mensaje: {resultado['message']}")
 
         self.assertFalse(resultado['success'])
         self.assertEqual(resultado['message'], 'Error interno al procesar el vehículo.')

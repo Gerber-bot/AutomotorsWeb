@@ -1,7 +1,11 @@
 import hashlib
+import logging
 from app.db import get_db_connection
 from app.repositorios.admin.usuario_repository import UsuarioRepository
 from app.repositorios.admin.rol_repository import RolRepository
+
+logger = logging.getLogger(__name__)
+
 
 class UsuarioService:
     def _hash_password(self, password):
@@ -25,10 +29,11 @@ class UsuarioService:
             conn.autocommit = False
             repo = UsuarioRepository(conn)
             
-            if repo.email_existe(data['usuario'], data.get('id_usuario')):
-                return {'success': False, 'message': '❌ Este email ya está registrado.'}
+            id_usuario = data.get('id_usuario') or None
+            if repo.email_existe(data['usuario'], id_usuario):
+                return {'success': False, 'message': 'Este email ya está registrado.'}
 
-            if data.get('id_usuario'):
+            if id_usuario:
                 if data.get('cambiar_password') and data.get('password'):
                     repo.actualizar_con_password(data, self._hash_password(data['password']))
                 else:
@@ -40,7 +45,7 @@ class UsuarioService:
             return {'success': True, 'message': 'Usuario guardado correctamente'}
         except Exception as e:
             conn.rollback()
-            print(f"LOG ERROR: {str(e)}")
+            logger.error("Error al guardar usuario: %s", e)
             return {'success': False, 'message': 'Error interno al guardar usuario.'}
         finally:
             conn.close()
@@ -52,11 +57,11 @@ class UsuarioService:
             conn.autocommit = False
             UsuarioRepository(conn).eliminar(id_usuario)
             conn.commit()
-            return {'success': True, 'message': '✅ Usuario eliminado permanentemente.'}
+            return {'success': True, 'message': 'Usuario eliminado permanentemente.'}
         except Exception as e:
             conn.rollback()
-            print(f"LOG ERROR: {str(e)}")
-            return {'success': False, 'message': '❌ No se pudo eliminar el usuario. Es posible que tenga registros asociados.'}
+            logger.error("Error al eliminar usuario %s: %s", id_usuario, e)
+            return {'success': False, 'message': 'No se pudo eliminar el usuario. Es posible que tenga registros asociados.'}
         finally:
             conn.close()
 
@@ -70,7 +75,7 @@ class UsuarioService:
             return {'success': True}
         except Exception as e:
             conn.rollback()
-            print(f"LOG ERROR: {str(e)}")
+            logger.error("Error al cambiar estado de usuario %s: %s", id_usuario, e)
             return {'success': False, 'message': 'Error interno al cambiar estado.'}
         finally:
             conn.close()

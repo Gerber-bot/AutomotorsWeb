@@ -1,5 +1,9 @@
+import logging
 from app.db import get_db_connection
 from app.repositorios.inventario.marca_repository import MarcaRepository
+
+logger = logging.getLogger(__name__)
+
 
 class MarcaService:
     
@@ -29,7 +33,7 @@ class MarcaService:
             return {'success': True}
         except Exception as e:
             conn.rollback()
-            print(f"LOG ERROR (MarcaService): {str(e)}")
+            logger.error("Error al guardar marca: %s", e)
             return {'success': False, 'message': 'Error interno al guardar la marca.'}
         finally:
             conn.close()
@@ -46,7 +50,7 @@ class MarcaService:
             return {'success': True}
         except Exception as e:
             conn.rollback()
-            print(f"LOG ERROR (MarcaService): {str(e)}")
+            logger.error("Error al eliminar marca %s: %s", id_marca, e)
             return {'success': False, 'message': 'No se puede eliminar la marca porque tiene vehículos asociados.'}
         finally:
             conn.close()

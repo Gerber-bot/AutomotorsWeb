@@ -1,5 +1,9 @@
+import logging
 from app.db import get_db_connection
 from app.repositorios.inventario.vehiculo_repository import VehiculoRepository
+
+logger = logging.getLogger(__name__)
+
 
 class VehiculoService:
     
@@ -39,12 +43,12 @@ class VehiculoService:
             repo.eliminar_detalles(vehiculo_id)
             repo.insertar_detalles(vehiculo_id, data)
 
-            conn.commit() # Confirma
+            conn.commit()
             return {'success': True, 'message': 'Vehículo guardado correctamente'}
             
         except Exception as e:
-            conn.rollback() # Revierte en caso de error
-            print(f"LOG ERROR (VehiculoService): {str(e)}") 
+            conn.rollback()
+            logger.error("Error al procesar vehículo: %s", e) 
             return {'success': False, 'message': 'Error interno al procesar el vehículo.'}
         finally:
             conn.close()
@@ -62,7 +66,7 @@ class VehiculoService:
             return {'success': True, 'message': 'Vehículo dado de baja correctamente'}
         except Exception as e:
             conn.rollback()
-            print(f"LOG ERROR (VehiculoService): {str(e)}")
+            logger.error("Error al dar de baja vehículo %s: %s", id_vehiculo, e)
             return {'success': False, 'message': 'No se pudo dar de baja el vehículo.'}
         finally:
             conn.close()

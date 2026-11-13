@@ -1,3 +1,6 @@
+import logging
+from datetime import datetime
+
 from app.db import get_db_connection
 
 from app.repositorios.ventas.venta_repository import VentaRepository
@@ -7,12 +10,12 @@ from app.repositorios.inventario.servicio_repository import ServicioRepository
 from app.repositorios.medios_pago.medio_pago_repository import MedioPagoRepository
 from app.repositorios.admin.usuario_repository import UsuarioRepository
 
-from datetime import datetime
-
 from app.servicios.ventas.detalle_venta_service import DetalleVentaService
 from app.servicios.ventas.detalle_servicio_service import DetalleServicioService
 
 from app.strategies.estrategia_pago import EstrategiaPago, ValidacionPagoException
+
+logger = logging.getLogger(__name__)
 
 
 class VentaService:
@@ -72,7 +75,7 @@ class VentaService:
             if conn:
                 conn.rollback()
 
-            print(f"LOG ERROR (VentaService): {str(e)}")
+            logger.error("Error al registrar venta: %s", e)
 
             return {
                 "success": False,
@@ -103,7 +106,7 @@ class VentaService:
             }
 
         except Exception as e:
-            print(f"LOG ERROR (VentaService): {str(e)}")
+            logger.error("Error al registrar venta: %s", e)
 
             return {
                 "medios_pago": [],
@@ -156,7 +159,7 @@ class VentaService:
             }
 
         except Exception as e:
-            print(f"LOG ERROR (VentaService): {str(e)}")
+            logger.error("Error al registrar venta: %s", e)
 
             return {
                 "success": False,
@@ -230,7 +233,7 @@ class VentaService:
             }
 
         except Exception as e:
-            print(f"LOG ERROR (VentaService): {str(e)}")
+            logger.error("Error al registrar venta: %s", e)
 
             return {
                 "success": False,
@@ -289,7 +292,7 @@ class VentaService:
         except Exception as e:
             conn.rollback()
 
-            print(f"LOG ERROR (VentaService): {str(e)}")
+            logger.error("Error al registrar venta: %s", e)
 
             return {
                 "success": False,

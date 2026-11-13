@@ -1,6 +1,9 @@
+import logging
 from app.db import get_db_connection
 from app.repositorios.ventas.detalle_venta_repository import DetalleVentaRepository
 from app.repositorios.inventario.vehiculo_repository import VehiculoRepository
+
+logger = logging.getLogger(__name__)
 
 
 class DetalleVentaService:
@@ -65,7 +68,7 @@ class DetalleVentaService:
             if not conexion_externa:
                 conn.rollback()
 
-            print(f"LOG ERROR (DetalleVentaService): {str(e)}")
+            logger.error("Error al registrar detalle de venta: %s", e)
 
             return {
                 'success': False,
@@ -96,7 +99,7 @@ class DetalleVentaService:
             }
 
         except Exception as e:
-            print(f"LOG ERROR (DetalleVentaService): {str(e)}")
+            logger.error("Error al obtener detalles de venta %s: %s", id_venta, e)
 
             return {
                 'success': False,
