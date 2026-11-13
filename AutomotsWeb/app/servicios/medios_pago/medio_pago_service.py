@@ -1,5 +1,8 @@
+import logging
 from app.db import get_db_connection
 from app.repositorios.medios_pago.medio_pago_repository import MedioPagoRepository
+
+logger = logging.getLogger(__name__)
 
 
 class MedioPagoService:
@@ -21,7 +24,7 @@ class MedioPagoService:
             }
 
         except Exception as e:
-            print(f"LOG ERROR (MedioPagoService): {str(e)}")
+            logger.error("Error al obtener medios de pago: %s", e)
             return {'success': False, 'message': 'Error al obtener los medios de pago', 'medios_pago': []}
 
         finally:

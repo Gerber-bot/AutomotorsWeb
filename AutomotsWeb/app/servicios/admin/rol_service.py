@@ -1,5 +1,9 @@
+import logging
 from app.db import get_db_connection
 from app.repositorios.admin.rol_repository import RolRepository
+
+logger = logging.getLogger(__name__)
+
 
 class RolService:
     def guardar_rol(self, data):
@@ -15,7 +19,7 @@ class RolService:
             return {'success': True, 'message': 'Rol agregado correctamente'}
         except Exception as e:
             conn.rollback()
-            print(f"LOG ERROR: {str(e)}")
+            logger.error("Error al guardar rol: %s", e)
             return {'success': False, 'message': 'Error interno al guardar rol.'}
         finally:
             conn.close()
@@ -33,7 +37,7 @@ class RolService:
             return {'success': True, 'message': 'Rol eliminado correctamente'}
         except Exception as e:
             conn.rollback()
-            print(f"LOG ERROR: {str(e)}")
+            logger.error("Error al eliminar rol %s: %s", id_rol, e)
             return {'success': False, 'message': 'Error interno al eliminar rol.'}
         finally:
             conn.close()

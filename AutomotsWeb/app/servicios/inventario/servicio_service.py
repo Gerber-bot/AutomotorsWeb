@@ -1,5 +1,9 @@
+import logging
 from app.db import get_db_connection
 from app.repositorios.inventario.servicio_repository import ServicioRepository
+
+logger = logging.getLogger(__name__)
+
 
 class ServicioService:
     
@@ -29,7 +33,7 @@ class ServicioService:
             return {'success': True}
         except Exception as e:
             conn.rollback()
-            print(f"LOG ERROR (ServicioService): {str(e)}")
+            logger.error("Error al guardar servicio: %s", e)
             return {'success': False, 'message': 'Error interno al guardar el servicio.'}
         finally:
             conn.close()
@@ -46,7 +50,7 @@ class ServicioService:
             return {'success': True}
         except Exception as e:
             conn.rollback()
-            print(f"LOG ERROR (ServicioService): {str(e)}")
+            logger.error("Error al eliminar servicio %s: %s", id_servicio, e)
             return {'success': False, 'message': 'El servicio tiene ventas asociadas y no puede eliminarse.'}
         finally:
             conn.close()

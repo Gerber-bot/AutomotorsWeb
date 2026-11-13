@@ -1,7 +1,11 @@
+import logging
 import os
 from datetime import datetime
 from app.db import get_db_connection
 from app.repositorios.admin.backup_repository import BackupRepository
+
+logger = logging.getLogger(__name__)
+
 
 class BackupService:
     def generar_backup(self):
@@ -22,7 +26,7 @@ class BackupService:
             
             return {'success': True, 'message': f'¡Copia de seguridad generada con éxito! Archivo guardado en: {archivo_bak}'}
         except Exception as e:
-            print(f"LOG ERROR: {str(e)}")
+            logger.error("Error al generar backup: %s", e)
             return {'success': False, 'message': 'Error al generar el backup (Verifique permisos de escritura de SQL Server).'}
         finally:
             conn.close()

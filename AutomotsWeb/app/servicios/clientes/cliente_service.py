@@ -1,5 +1,9 @@
+import logging
 from app.db import get_db_connection
 from app.repositorios.clientes.cliente_repository import ClienteRepository
+
+logger = logging.getLogger(__name__)
+
 
 class ClienteService:
     def obtener_clientes(self):
@@ -22,7 +26,7 @@ class ClienteService:
             return {'success': True, 'message': 'Cliente guardado correctamente'}
         except Exception as e:
             conn.rollback()
-            print(f"LOG ERROR (ClienteService): {str(e)}")
+            logger.error("Error al guardar cliente: %s", e)
             return {'success': False, 'message': 'Error interno al procesar el cliente.'}
         finally:
             conn.close()
@@ -40,7 +44,7 @@ class ClienteService:
             return {'success': True, 'message': 'Cliente eliminado correctamente'}
         except Exception as e:
             conn.rollback()
-            print(f"LOG ERROR (ClienteService): {str(e)}")
+            logger.error("Error al eliminar cliente %s: %s", id_cliente, e)
             return {'success': False, 'message': 'Error interno al eliminar el cliente.'}
         finally:
             conn.close()

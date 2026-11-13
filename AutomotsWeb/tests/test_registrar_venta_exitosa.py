@@ -59,7 +59,6 @@ class TestRegistrarVentaExitosa(unittest.TestCase):
 
         estrategia = PagoContado()
         resultado = self.servicio.registrar_venta(datos, estrategia)
-        print(f"Resultado obtenido: success={resultado['success']}, mensaje: {resultado['message']}")
 
         self.assertTrue(resultado['success'])
         self.assertEqual(resultado['id_venta'], 1)

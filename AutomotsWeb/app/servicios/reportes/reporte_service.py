@@ -1,6 +1,10 @@
+import logging
 from datetime import datetime, timedelta
 from app.db import get_db_connection
 from app.repositorios.reportes.reporte_repository import ReporteRepository
+
+logger = logging.getLogger(__name__)
+
 
 class ReporteService:
     def procesar_reporte(self, tipo_reporte, fecha_desde, fecha_hasta):
@@ -25,7 +29,7 @@ class ReporteService:
                 columnas, resultados = repo.obtener_stock_vehiculos()
                 
         except Exception as e:
-            print(f"LOG ERROR (ReporteService): {str(e)}")
+            logger.error("Error al procesar reporte %s: %s", tipo_reporte, e)
         finally:
             conn.close()
 

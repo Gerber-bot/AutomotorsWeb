@@ -24,9 +24,14 @@
 
 <a href="{{ url_for('clientes.index') }}" class="list-group-item list-group-item-action bg-transparent text-white fw-bold"><i class="fas fa-address-book me-2"></i>Clientes</a>
                 <a href="{{ url_for('ventas.nueva_venta') }}" class="list-group-item list-group-item-action bg-transparent text-white fw-bold">
-    <i class="fas fa-shopping-cart me-2"></i>Ventas
-<a href="{{ url_for('reportes.index') }}" class="list-group-item list-group-item-action bg-transparent text-white fw-bold"><i class="fas fa-chart-line me-2"></i>Reportes</a>
-                <a href="{{ url_for('admin.backup') }}" class="list-group-item list-group-item-action bg-transparent text-white fw-bold"><i class="fas fa-database me-2"></i>Backup</a>
+                    <i class="fas fa-shopping-cart me-2"></i>Ventas
+                </a>
+                <a href="{{ url_for('reportes.index') }}" class="list-group-item list-group-item-action bg-transparent text-white fw-bold">
+                    <i class="fas fa-chart-line me-2"></i>Reportes
+                </a>
+                <a href="{{ url_for('admin.backup') }}" class="list-group-item list-group-item-action bg-transparent text-white fw-bold">
+                    <i class="fas fa-database me-2"></i>Backup
+                </a>
                  </div>
             <div class="mt-auto border-top border-secondary text-center py-3">
                 <a href="{{ url_for('auth.logout') }}" class="text-danger text-decoration-none fw-bold"><i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión</a>

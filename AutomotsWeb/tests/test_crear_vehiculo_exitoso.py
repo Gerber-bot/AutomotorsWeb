@@ -61,8 +61,6 @@ class TestCrearVehiculoExitoso(unittest.TestCase):
         }
 
         resultado = self.servicio.guardar_vehiculo(datos)
-        
-        print(f"Resultado obtenido: success={resultado['success']}, mensaje: {resultado['message']}")
 
         self.assertTrue(resultado['success'])
         self.assertEqual(resultado['message'], 'Vehículo guardado correctamente')
