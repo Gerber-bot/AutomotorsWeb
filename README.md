@@ -2,7 +2,7 @@
 
 Sistema web integral de gestión comercial para concesionarias automotrices, desarrollado con **Python**, **Flask** y **Microsoft SQL Server**.
 
-> **Acreditación:** Proyecto original desarrollado por **Grupo 48** para la cátedra de Ingeniería de Software II. Esta versión ha sido revisada, saneada y preparada para presentación profesional y de portafolio.
+> **Acreditación:** Proyecto original desarrollado por **Grupo 48** para la cátedra de Ingeniería de Software II.
 
 ---
 
